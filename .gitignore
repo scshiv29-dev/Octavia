@@ -135,7 +135,8 @@ cython_debug/
 Thumbs.db
 
 # Database
-
+*.db
+musicbot.db
 
 # VSCode
 .vscode/

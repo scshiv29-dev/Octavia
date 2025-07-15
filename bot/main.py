@@ -20,5 +20,7 @@ async def main():
     await bot.start(DISCORD_TOKEN)
 
 if __name__ == "__main__":
+    import bot.database as db
+    db.init_db()
     import asyncio
     asyncio.run(main()) 

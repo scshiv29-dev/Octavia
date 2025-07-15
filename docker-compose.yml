@@ -14,7 +14,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:8000"
+      - "43827:8000"
     volumes:
       - ./musicbot.db:/app/musicbot.db
     restart: unless-stopped 

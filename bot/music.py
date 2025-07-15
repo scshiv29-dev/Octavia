@@ -11,6 +11,7 @@ import functools
 from .music_queue import MusicQueue
 import asyncio
 import time
+import bot.database as db
 
 # Setup logging
 logging.basicConfig(
@@ -220,6 +221,12 @@ class Music(commands.Cog):
                     asyncio.run_coroutine_threadsafe(ctx.send(f"Failed to play '{title or search_query}' after 2 retries, skipping."), ctx.bot.loop)
         self.song_start_times[ctx.guild.id] = (time.time(), retries, url2, title, ctx_obj, duration, requester, search_query)
         self.last_text_channel[ctx.guild.id] = ctx.channel
+        # --- Insert playback record ---
+        user_id = getattr(ctx.author, 'id', str(ctx.author))
+        guild_id = str(ctx.guild.id)
+        guild_name = str(ctx.guild.name)
+        db.insert_playback(user_id, title or search_query or url2, url2, duration, guild_id, guild_name)
+        # --- End insert ---
         vc.play(discord.FFmpegPCMAudio(url2), after=after_playback)
         await ctx.send(f"Now playing: {title or search_query}")
         logger.info(f"Now playing: {title or search_query} (requested by {requester})")

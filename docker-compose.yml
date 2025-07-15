@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./musicbot.db:/app/musicbot.db
+      - ./musicbot.sqlite:/app/musicbot.db
     restart: unless-stopped
   dashboard:
     build: .
@@ -16,5 +16,5 @@ services:
     ports:
       - "43827:8000"
     volumes:
-      - ./musicbot.db:/app/musicbot.db
+      - ./musicbot.sqlite:/app/musicbot.db
     restart: unless-stopped 
